@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crime Data Visualization - Results</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Crime Data Visualization - Results</h1>
+
+    <h2>Bar Graphs by State</h2>
+    <div id="bar-state"></div>
+
+    <h2>Bar Graphs by Year</h2>
+    <div id="bar-year"></div>
+
+    <h2>Pie Charts by State</h2>
+    <div id="pie-state"></div>
+
+    <h2>Pie Charts by Year</h2>
+    <div id="pie-year"></div>
+
+    <script>
+        // Load the data from the server
+        const response = JSON.parse('{{ data | tojson }}');
+
+        // Create the bar graphs by state
+        Object.keys(response.barStateData).forEach(function(column) {
+            const data = response.barStateData[column];
+            const layout = { title: column + ' by State' };
+            Plotly.newPlot('bar-state', data, layout);
+        });
+
+        // Create the bar graphs by year
+        Object.keys(response.barYearData).forEach(function(column) {
+            const data = response.barYearData[column];
+            const layout = { title: column + ' by Year' };
+            Plotly.newPlot('bar-year', data, layout);
+        });
+
+        // Create the pie charts by state
+        Object.keys(response.pieStateData).forEach(function(column) {
+            const data = response.pieStateData[column];
+            const layout = { title: column + ' by State' };
+            Plotly.newPlot('pie-state', data, layout);
+        });
+
+        // Create the pie charts by year
+        Object.keys(response.pieYearData).forEach(function(column) {
+            const data = response.pieYearData[column];
+            const layout = { title: column + ' by Year' };
+            Plotly.newPlot('pie-year', data, layout);
+        });
+    </script>
+</body>
+</html>
